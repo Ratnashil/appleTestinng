@@ -121,3 +121,14 @@ def test_negative_search_does_not_break_page(page):
 
     search_page.verify_search_url()
     search_page.verify_negative_search_is_handled()
+
+def test_apple(page):
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=False)
+        context = browser.new_context()
+        page = context.new_page()
+
+        page.goto("https://www.apple.com/", wait_until='domcontentloaded')
+        page.bring_to_front()
+        page.get_by_role("button", name="Shopping Bag", exact=True).click(force=True)
+
