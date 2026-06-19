@@ -102,3 +102,18 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def open_external_url(self, url: str):
+        """Open an arbitrary external URL (used for non-base URLs like Google)."""
+        self.open_url(url)
+        self.page.bring_to_front()
+
+    def search_for_product_and_wait(self, product_name: str):
+        """Search for a product using the header search and wait for the search results page."""
+        self.open_search()
+        search_input = self.search_input()
+        search_input.fill(product_name)
+        search_input.press("Enter")
+        self.page.wait_for_url("**/search/**")
+        self.page.wait_for_load_state("domcontentloaded")
+        self.page.bring_to_front()

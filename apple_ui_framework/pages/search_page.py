@@ -40,3 +40,10 @@ class SearchPage(BasePage):
         possible_results = self.main_content().get_by_role("link")
         possible_message = self.page.get_by_text(self.NO_RESULTS_MESSAGE)
         assert possible_results.count() > 0 or possible_message.count() > 0
+
+    def open_first_specs_result(self):
+        """Click the first visible search result link that contains 'specs' in its href and wait for navigation."""
+        specs_link = self.page.locator("a[href*=\"specs\"]:visible").first
+        specs_link.click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
+        self.page.bring_to_front()
