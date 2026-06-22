@@ -102,3 +102,13 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def open_external_page(self, url: str):
+        self.page.goto(url, wait_until="domcontentloaded")
+        self.page.bring_to_front()
+
+    def dismiss_continue_modal(self):
+        continue_button = self.page.get_by_role("button", name="Continue", exact=True).or_(
+            self.page.get_by_text("Continue", exact=False)
+        ).first
+        continue_button.click(force=True)
