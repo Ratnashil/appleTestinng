@@ -102,3 +102,7 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def open_apple_tv_page(self):
+        self.page.get_by_text("Apple TV", exact=False).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
