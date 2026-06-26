@@ -40,3 +40,9 @@ class SearchPage(BasePage):
         possible_results = self.main_content().get_by_role("link")
         possible_message = self.page.get_by_text(self.NO_RESULTS_MESSAGE)
         assert possible_results.count() > 0 or possible_message.count() > 0
+
+    def open_specific_result_link(self, link_name: str):
+        self.page.get_by_role("link", name=link_name, exact=True).click(force=True)
+
+    def open_search_results_url(self, url: str):
+        self.open_url(url)
