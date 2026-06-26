@@ -40,3 +40,9 @@ class SearchPage(BasePage):
         possible_results = self.main_content().get_by_role("link")
         possible_message = self.page.get_by_text(self.NO_RESULTS_MESSAGE)
         assert possible_results.count() > 0 or possible_message.count() > 0
+
+    def open_first_result_matching(self, pattern: str):
+        compiled = re.compile(pattern, re.I)
+        link = self.product_result_links().filter(name=compiled).first
+        link.click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
