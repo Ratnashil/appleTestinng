@@ -102,3 +102,14 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def handle_continue_button(self):
+        self.page.get_by_role("button", name="Continue", exact=True).click(force=True)
+
+    def search_for_product_without_submit(self, product_name: str):
+        self.open_search()
+        search_input = self.search_input()
+        search_input.fill(product_name)
+
+    def hover_search_button(self):
+        self.global_navigation().get_by_role("button", name=re.compile("search", re.I)).hover()
