@@ -43,3 +43,6 @@ class BasePage:
 
     def get_locator_count(self, locator: str) -> int:
         return self.page.locator(locator).count()
+
+    def bring_to_front(self):
+        self.page.bring_to_front()
