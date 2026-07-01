@@ -102,3 +102,26 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def handle_google_continue_interstitial(self):
+        button = self.page.get_by_role("button", name="Continue", exact=True)
+        if button.is_visible():
+            button.click(force=True)
+
+    def open_os_previews_page(self):
+        self.page.get_by_role("link", name="Explore the previews, OS preview", exact=True).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
+
+    def open_ipados_preview(self):
+        self.page.get_by_role("link", name="iPadOS", exact=True).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
+
+    def open_macos_preview(self):
+        self.page.get_by_role("link", name="macOS", exact=True).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
+
+    def scroll_to_y_position(self, y: int):
+        self.page.evaluate(f"window.scrollTo(0, {y})")
+
+    def bring_page_to_front(self):
+        self.page.bring_to_front()
