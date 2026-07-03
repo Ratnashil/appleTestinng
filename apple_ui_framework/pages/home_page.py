@@ -102,3 +102,28 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def open_external_site(self, url: str):
+        """Open an arbitrary external URL (e.g., Google) before starting the Apple journey."""
+        self.open_url(url)
+        self.page.bring_to_front()
+
+    def dismiss_region_modal(self):
+        """Dismiss the region/cookie modal by clicking the 'Continue' button, if present."""
+        continue_button = self.page.get_by_role("button", name="Continue", exact=True)
+        if continue_button.count() > 0:
+            continue_button.first.click(force=True)
+
+    def scroll_by(self, y_offset: int):
+        """Scroll the window vertically by a fixed pixel offset, matching recorded flows."""
+        self.page.evaluate(f"window.scrollTo(0, {y_offset})")
+
+    def open_mac_from_main_content(self):
+        """Open the Mac section via the main content link instead of global navigation."""
+        self.main_content().get_by_text("Mac", exact=False).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
+
+    def open_apple_camp_page(self):
+        """Open the Apple Camp page from the visible link in the current view."""
+        self.page.get_by_role("link", name="Apple Camp", exact=True).click(force=True)
+        self.page.wait_for_load_state("domcontentloaded")
