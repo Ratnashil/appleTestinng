@@ -102,3 +102,14 @@ class HomePage(BasePage):
 
     def verify_mobile_menu_visible(self):
         expect(self.global_navigation()).to_be_visible()
+
+    def open_google_homepage(self):
+        self.open_url("https://www.google.com/")
+
+    def open_shopping_bag(self):
+        bag_button = self.global_navigation().get_by_role("button", name="Shopping Bag", exact=True)
+        bag_button.click(force=True)
+
+    def open_your_saves(self):
+        your_saves_link = self.page.get_by_role("link", name="Your Saves", exact=True)
+        your_saves_link.click(force=True)
